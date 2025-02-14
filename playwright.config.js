@@ -9,7 +9,9 @@ module.exports = defineConfig({
   reporter: 'html', // Use the HTML reporter
   use: {
     baseURL: 'https://playwright.dev/', // Base URL for all tests
-    trace: 'on-first-retry', // Collect traces when retrying failed tests
+    trace: 'on-first-retry', // Capture traces for failed tests
+    screenshot: 'on', // Capture screenshots on failure
+    video: 'on', // Record videos for each test
   },
   projects: [
     {

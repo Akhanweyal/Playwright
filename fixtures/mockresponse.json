@@ -1,0 +1,10 @@
+{
+    "results": [
+      {
+        "hits": [
+          { "title": "Mocked Search Result 1", "url": "/mocked-result-1" },
+          { "title": "Mocked Search Result 2", "url": "/mocked-result-2" }
+        ]
+      }
+    ]
+  }

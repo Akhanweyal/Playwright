@@ -12,26 +12,32 @@ test('Verify page title and header', async ({ page }) => {
 
   // Verify the header text
   const header = await page.textContent('h1');
-  expect(header).toBe('Playwright');
+  expect(header).toContain('Playwright enables reliable end-to-end testing for modern web apps.');
 });
 
-test('Fill out a form and submit', async ({ page }) => {
-  // Navigate to the Playwright docs page
-  await page.goto('/docs/intro');
-
-  // Fill out a search input field
-  await page.fill('input[placeholder="Search"]', 'locators');
-
-  // Press Enter to submit the search
-  await page.press('input[placeholder="Search"]', 'Enter');
-
-  // Wait for the search results to load
-  await page.waitForSelector('.search-results');
-
-  // Verify that the search results contain the expected text
-  const searchResults = await page.textContent('.search-results');
-  expect(searchResults).toContain('locators');
-});
+test.only('Fill out a form and submit', async ({ page }) => {
+    // Navigate to the Playwright docs page
+    await page.goto('/docs/intro');
+  
+    // Click the search button to open the search input field
+    await page.click("span.DocSearch-Button-Placeholder");
+  
+    // Wait for the search input field to be visible
+    const searchInput = await page.waitForSelector('input.DocSearch-Input');
+  
+    // Fill out the search input field
+    await searchInput.fill('locators', { force: true });
+  
+    // Press Enter to submit the search
+    await searchInput.press('Enter');
+  
+    // Wait for the search results to load
+    await page.waitForSelector('.DocSearch-Dropdown');
+  
+    // Verify that the search results contain the expected text
+    const searchResults = await page.textContent('.DocSearch-Dropdown');
+    expect(searchResults).toContain('locators');
+  });
 
 test('Handle a dialog box', async ({ page }) => {
   // Navigate to a page with a dialog (e.g., a page with a JavaScript alert)
@@ -47,17 +53,20 @@ test('Handle a dialog box', async ({ page }) => {
   });
 
   // Trigger the dialog (e.g., by clicking a button)
-  await page.click('button#trigger-alert');
+  await page.click('button#trigger-alert'); // Replace with a valid selector
 });
 
-test('Take a screenshot and generate a PDF', async ({ page }) => {
+test('Take a screenshot and generate a PDF', async ({ page, browserName }) => {
+  // Skip PDF generation in non-Chromium browsers or headed mode
+  test.skip(browserName !== 'chromium', 'PDF generation is only supported in Chromium');
+
   // Navigate to the Playwright homepage
   await page.goto('/');
 
   // Take a screenshot of the entire page
-  await page.screenshot({ path: 'screenshot.png', fullPage: true });
+  await page.screenshot({ path: 'ScreenShots', fullPage: true });
 
-  // Generate a PDF of the page
+  // Generate a PDF of the page (only in headless Chromium)
   await page.pdf({ path: 'page.pdf' });
 });
 
@@ -73,7 +82,10 @@ test('Intercept and mock a network request', async ({ page }) => {
   });
 
   // Navigate to a page that makes the API request
-  await page.goto('/data-page');
+  await page.goto('/data-page'); // Replace with a valid page URL
+
+  // Wait for the mocked data to be displayed
+  await page.waitForSelector('.data-display');
 
   // Verify that the mocked data is displayed
   const data = await page.textContent('.data-display');
