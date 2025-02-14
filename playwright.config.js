@@ -10,8 +10,8 @@ module.exports = defineConfig({
   use: {
     baseURL: 'https://playwright.dev/', // Base URL for all tests
     trace: 'on-first-retry', // Capture traces for failed tests
-    screenshot: 'on', // Capture screenshots on failure
-    video: 'on', // Record videos for each test
+    screenshot: 'off', // Capture screenshots on failure
+    video: 'off', // Record videos for each test
   },
   projects: [
     {
