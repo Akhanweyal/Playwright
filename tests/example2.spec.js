@@ -15,7 +15,7 @@ test('Verify page title and header', async ({ page }) => {
   expect(header).toContain('Playwright enables reliable end-to-end testing for modern web apps.');
 });
 
-test.only('Fill out a form and submit', async ({ page }) => {
+test('Fill out a form and submit', async ({ page }) => {
     // Navigate to the Playwright docs page
     await page.goto('/docs/intro');
   

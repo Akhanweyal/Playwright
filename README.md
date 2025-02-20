@@ -8,4 +8,4 @@ Steps
 4. npm install @playwright/test for writting test
 5. npx playwright test --headed to run the test 
 6. npx playwright show-report   this will open the reports
-
+7. npx playwright codegen demo.playwright.dev/todomvc for generating test

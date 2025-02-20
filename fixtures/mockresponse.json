@@ -1,10 +1,33 @@
 {
-    "results": [
-      {
-        "hits": [
-          { "title": "Mocked Search Result 1", "url": "/mocked-result-1" },
-          { "title": "Mocked Search Result 2", "url": "/mocked-result-2" }
-        ]
-      }
-    ]
+  "success": {
+    "status": 200,
+    "body": {
+      "results": [
+        {
+          "hits": [
+            { "title": "Mocked Search Result 1", "url": "/mocked-result-1" },
+            { "title": "Mocked Search Result 2", "url": "/mocked-result-2" }
+          ]
+        }
+      ]
+    }
+  },
+  "delayed": {
+    "status": 200,
+    "body": {
+      "results": [
+        {
+          "hits": [
+            { "title": "Delayed Search Result", "url": "/delayed-result" }
+          ]
+        }
+      ]
+    }
+  },
+  "error": {
+    "status": 500,
+    "body": {
+      "error": "Search API Error"
+    }
   }
+}
