@@ -3,7 +3,7 @@ const { defineConfig, devices } = require('@playwright/test');
 
 const config = defineConfig({
   testDir: './tests',
-  fullyParallel: false,      // Disable parallel execution in CI
+  fullyParallel: true,      // Disable parallel execution in CI
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : 3,  // 3 workers locally, 1 in CI
