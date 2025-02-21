@@ -11,18 +11,9 @@ pipeline {
                 bat 'npm install'
             }
         }
-        stage('Run Tests in Parallel') {
-            parallel {
-                stage('Run Tests on Chromium') {
-                    steps {
-                        bat 'npx playwright test --project=chromium'
-                    }
-                }
-                stage('Run Tests on Firefox') {
-                    steps {
-                        bat 'npx playwright test --project=firefox'
-                    }
-                }
+        stage('Run Tests') {
+            steps {
+                bat 'npm run test'
             }
         }
         stage('Publish Report') {
