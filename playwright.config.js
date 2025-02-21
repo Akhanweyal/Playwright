@@ -1,21 +1,20 @@
-// playwright.config.js
 const { defineConfig, devices } = require('@playwright/test');
 
-const config = defineConfig({
+module.exports = defineConfig({
   testDir: './tests',
-  fullyParallel: true,      // Disable parallel execution in CI
+  fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : 3,  // 3 workers locally, 1 in CI
+  workers: process.env.CI ? 1 : 3,
   reporter: [
-    ['html', { outputFolder: 'playwright-report', open: 'never' }]
+    ['html', { outputFolder: 'playwright-report' }] // Ensure this path is correct
   ],
   use: {
     baseURL: 'https://playwright.dev/',
     trace: 'on-first-retry',
-    screenshot: 'on',       // Enable for CI debugging
+    screenshot: 'on',
     video: 'retain-on-failure',
-    headless: process.env.CI ? true : false  // Headless in CI
+    headless: process.env.CI ? true : false
   },
   projects: [
     {
@@ -27,5 +26,3 @@ const config = defineConfig({
     }
   ]
 });
-
-module.exports = config;

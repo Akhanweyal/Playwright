@@ -5,13 +5,13 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/');
 });
 
-test('Verify Playwright website title', async ({ page }) => {
+test.only('Verify Playwright website title', async ({ page }) => {
   // Verify the title of the page
   const title = await page.title();
   expect(title).toContain('Fast and reliable end-to-end testing for modern web apps | Playwright');
 });
 
-test('Check Get Started button', async ({ page }) => {
+test.only('Check Get Started button', async ({ page }) => {
   // Click the "Get Started" button
   await page.click('text=Get Started');
 

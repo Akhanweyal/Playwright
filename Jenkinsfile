@@ -1,39 +1,41 @@
 pipeline {
     agent any
+    tools {
+        nodejs 'NodeJS-18' // Name of your Node.js installation in Jenkins
+    }
+    environment {
+        CI = 'true'
+    }
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Akhanweyal/Playwright.git'
+                git branch: 'main', 
+                url: 'https://github.com/Akhanweyal/Playwright.git'
             }
         }
-        stage('Install Dependencies') {
+        stage('Install') {
             steps {
-                bat 'npm install'
+                bat 'npm ci' // Clean install for CI
+                bat 'npx playwright install --with-deps'
             }
         }
         stage('Run Tests') {
             steps {
-                bat 'npm run test'
-            }
-        }
-        stage('Publish Report') {
-            steps {
-                // Publish Playwright test report
-                publishHTML(target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'playwright-report',
-                    reportFiles: 'index.html',
-                    reportName: 'Playwright Test Report'
-                ])
+                bat 'npx playwright test --config=playwright.config.js'
             }
         }
     }
     post {
         always {
-            // Archive the test results
-            archiveArtifacts 'playwright-report/**'
+            publishHTML target: [
+                allowMissing: true,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'playwright-report',
+                reportFiles: 'index.html',
+                reportName: 'Playwright Report'
+            ]
+            archiveArtifacts artifacts: 'playwright-report/**/*'
         }
     }
 }
