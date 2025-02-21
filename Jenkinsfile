@@ -1,23 +1,22 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage('checkout'){
-            steps{
-                git 'https://github.com/Akhanweyal/Playwright.git'
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Akhanweyal/Playwright.git'
             }
         }
-    }
-    stage{
-        steps('install dependecies'){
-            sh 'npm install'
+        stage('Install Dependencies') {
+            steps {
+                bat 'npm install'
+            }
         }
-    }
-    stage{
-        steps('run test'){
-            sh 'npm run test'
+        stage('Run Tests') {
+            steps {
+                bat 'npm run test'
+            }
         }
-    }
-    stage('Publish Report') {
+        stage('Publish Report') {
             steps {
                 // Publish Playwright test report
                 publishHTML(target: [
@@ -28,11 +27,12 @@ pipeline{
                     reportFiles: 'index.html',
                     reportName: 'Playwright Test Report'
                 ])
+            }
         }
     }
-    post{
-        always{
-            // archive the test results
+    post {
+        always {
+            // Archive the test results
             archiveArtifacts 'playwright-report/**'
         }
     }
