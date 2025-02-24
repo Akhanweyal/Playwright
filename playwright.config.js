@@ -14,7 +14,7 @@ module.exports = defineConfig({
     trace: 'on-first-retry',
     screenshot: 'on',
     video: 'retain-on-failure',
-    headless: process.env.CI ? true : false
+    headless: process.env.CI ? true : true
   },
   projects: [
     {
