@@ -9,20 +9,20 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') { {
+        stage('Install Dependencies') {
             steps {
-                bat 'npm install' install'
+                bat 'npm install'
             }
         }
 
-        stage('Run Tests in Parallel') {('Run Tests in Parallel') {
-            parallel {   parallel {
-                stage('Run Tests on Chromium') {                stage('Run Tests on Chromium') {
+        stage('Run Tests in Parallel') {
+            parallel {
+                stage('Run Tests on Chromium') {
                     steps {
-                        bat 'npx playwright test --project=chromium'  bat 'npx playwright test --project=chromium'
+                        bat 'npx playwright test --project=chromium'
                     }
                 }
-                stage('Run Tests on Firefox') { on Firefox') {
+                stage('Run Tests on Firefox') {
                     steps {
                         bat 'npx playwright test --project=firefox'
                     }
@@ -32,23 +32,23 @@ pipeline {
 
         stage('Publish Report') {
             steps {
-                // Publish Playwright test reportright test report
+                // Publish Playwright test report
                 publishHTML(target: [
                     allowMissing: false,
                     alwaysLinkToLastBuild: true,
-                    keepAll: true,true,
-                    reportDir: 'playwright-report',tDir: 'playwright-report',
-                    reportFiles: 'index.html',eportFiles: 'index.html',
-                    reportName: 'Playwright Test Report'   reportName: 'Playwright Test Report'
-                ])   ])
-            }   }
-        }        }
+                    keepAll: true,
+                    reportDir: 'playwright-report',
+                    reportFiles: 'index.html',
+                    reportName: 'Playwright Test Report'
+                ])
+            }
+        }
     }
 
     post {
         always {
             // Archive the test results
-            archiveArtifacts 'playwright-report/**'**'
+            archiveArtifacts 'playwright-report/**'
         }
     }
 }
